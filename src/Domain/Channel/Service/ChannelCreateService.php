@@ -70,12 +70,16 @@ final class ChannelCreateService
     public function create(object $request): object
     {
 
+        // Create channel
         $this->channel->channelHash = md5(time());
-        $this->channel->channelName = ($request->channel_name) ? $request->channel_name : NULL;
+        $this->channel->channelName = ($request->channel_name) ? $request->channel_name : $this->channel->channelHash;
         $this->channel->createdTime = time();
 
-        $this->response = $this->channel;
+        // Save channel in memory
+        $this->repository->set($this->channel->channelHash, $this->channel->channelName, 30);
 
+        // Respond with channel info
+        $this->response = $this->channel;
         return $this->response;
     }
 
