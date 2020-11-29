@@ -4,7 +4,8 @@ namespace App\Domain\Channel\Service;
 
 use App\Factory\LoggerFactory;
 use Psr\Log\LoggerInterface;
-use App\Domain\Site\Repository\ChannelRepository;
+use App\Domain\Channel\Repository\ChannelRepository;
+use App\Domain\Channel\Data\Channel;
 
 /**
  * ChannelCreateService
@@ -32,6 +33,13 @@ final class ChannelCreateService
     private $logger;
 
     /**
+     * Data model
+     *
+     * @var Channel
+     */
+    private $channel;
+
+    /**
      * Response onbject
      */
     public $response;
@@ -43,9 +51,10 @@ final class ChannelCreateService
      * 
      * @param SiteApprovalRepository $_repository
      */
-    public function __construct(LoggerFactory $logger, ChannelRepository $repository)
+    public function __construct(LoggerFactory $logger, ChannelRepository $repository, Channel $channel)
     {
         $this->repository           = $repository;
+        $this->channel              = $channel;
         $this->logger               = $logger
             ->addFileHandler('site_approval_service.log')
             ->createInstance('site_approval_service_process');
@@ -60,6 +69,12 @@ final class ChannelCreateService
      */
     public function create(object $request): object
     {
+
+        $this->channel->channelHash = md5(time());
+        $this->channel->channelName = ($request->channel_name) ? $request->channel_name : NULL;
+        $this->channel->createdTime = time();
+
+        $this->response = $this->channel;
 
         return $this->response;
     }
