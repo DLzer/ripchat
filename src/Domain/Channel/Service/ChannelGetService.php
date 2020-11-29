@@ -8,7 +8,7 @@ use App\Domain\Channel\Repository\ChannelRepository;
 use App\Domain\Channel\Data\Channel;
 
 /**
- * ChannelCreateService
+ * ChannelGetService
  * 
  * @category FinalClass
  * @package  ChannelService
@@ -16,7 +16,7 @@ use App\Domain\Channel\Data\Channel;
  * @license  MIT https://opensource.org/licenses/MIT
  * @link     github.com/DLzer/ripchat
  */
-final class ChannelCreateService
+final class ChannelGetService
 {
     /**
      * Repository
@@ -56,8 +56,8 @@ final class ChannelCreateService
         $this->repository           = $repository;
         $this->channel              = $channel;
         $this->logger               = $logger
-            ->addFileHandler('channel_create_service.log')
-            ->createInstance('channel_create_service_process');
+            ->addFileHandler('channel_get_service.log')
+            ->createInstance('channel_get_service_process');
         $this->response             = new \stdClass();
     }
 
@@ -67,19 +67,24 @@ final class ChannelCreateService
      * @param object $request
      * @return boolean
      */
-    public function create(object $request): object
+    public function get(object $request): object
     {
 
-        // Create channel
-        $this->channel->channelHash = md5(time());
-        $this->channel->createdTime = time();
+        if($this->repository->exists($request->channel_hash)) {
 
-        // Save channel in memory
-        $this->repository->rpush($this->channel->channelHash, $this->channel->createdTime, 60);
+            // Save channel in memory
+            $channel = $this->repository->get($this->channel->channelHash);
 
-        // Respond with channel info
-        $this->response = $this->channel;
-        return $this->response;
+            // Respond with channel info
+            $this->response = $channel;
+            return $this->response;
+
+        } else {
+
+            $this->response = 'Error: Channel no longer exists';
+            return  $this->response;
+
+        }
     }
 
 }

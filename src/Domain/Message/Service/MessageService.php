@@ -69,17 +69,26 @@ final class MessageService
      */
     public function create(object $request): object
     {
+        
+        if($this->repository->exists($request->channel_hash)) {
 
-        // Create channel
-        $this->message->messageHash = 'm:'.md5(time());
-        $this->message->createdTime = time();
+            // Create channel
+            $this->message->channelHash = $request->channel_hash;
+            $this->message->messageBody = $request->message_body;
 
-        // Save channel in memory
-        $this->repository->set($this->message->messageHash, $this->message->createdTime, 30);
+            // Save message in memory under the channel. Reset TTL to 60 seconds
+            $this->repository->rpush($this->message->channelHash, $this->message->messageBody, 60);
 
-        // Respond with channel info
-        $this->response = $this->message;
-        return $this->response;
+            // Respond with channel info
+            $this->response = $this->message;
+            return $this->response;
+
+        } else {
+
+            $this->response = 'Error: Channel no longer exists';
+            return  $this->response;
+
+        }
     }
 
 }

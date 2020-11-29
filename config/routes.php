@@ -7,6 +7,7 @@ return function (App $app) {
     $app->get('/', \App\Action\HomeAction::class);
 
     // App Actions
-    $app->post('/channel/create',  \App\Action\ChannelCreateAction::class)->setName('channelCreate');
-    $app->post('/channel/join',  \App\Action\ChannelJoinAction::class)->setName('channelJoin');
+    $app->post('/channel/create', \App\Action\ChannelCreateAction::class)->setName('channelCreate');
+    $app->post('/channel/get', \App\Action\ChannelGetAction::class)->setName('channelGet');
+    $app->post('/message/send', \App\Action\MessageSendAction::class)->setName('messageSend');
 };

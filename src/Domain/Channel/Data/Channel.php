@@ -11,6 +11,12 @@ final class Channel
      */
     public $channelHash;
     /**
+     * Message Data
+     *
+     * @var object
+     */
+    public $messages;
+    /**
      * The channels create time in epoch
      *
      * @var int $channelCreateTime

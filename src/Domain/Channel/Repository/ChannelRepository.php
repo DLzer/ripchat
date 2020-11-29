@@ -61,6 +61,28 @@ class ChannelRepository
     }
 
     /**
+     * Will push to an existing list and optionally set the ttl
+     *
+     * @param string $key
+     * @param string $value
+     * @param integer $ttl
+     * @return array
+     */
+    public function rpush(string $key, string $value, int $ttl = null): array
+    {
+        $this->redis->rpush($key, $value);
+
+        // IF $ttl is true, use TTL to set the expires time, otherwise default to 60s
+        if($ttl) {
+            $this->redis->expire($key, $ttl);
+        } else {
+            $this->redis->expire($key, 60);
+        }
+
+        return [$key => $value];
+    }
+
+    /**
      * Expires is meant to update the expiration time of a key
      *
      * @param string $key
