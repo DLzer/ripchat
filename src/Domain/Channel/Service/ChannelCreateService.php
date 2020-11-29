@@ -49,7 +49,7 @@ final class ChannelCreateService
      *
      * @param LoggerFactory $_logger
      * 
-     * @param SiteApprovalRepository $_repository
+     * @param ChannelRepository $_repository
      */
     public function __construct(LoggerFactory $logger, ChannelRepository $repository, Channel $channel)
     {
@@ -71,12 +71,11 @@ final class ChannelCreateService
     {
 
         // Create channel
-        $this->channel->channelHash = md5(time());
-        $this->channel->channelName = ($request->channel_name) ? $request->channel_name : $this->channel->channelHash;
+        $this->channel->channelHash = 'c:'.md5(time());
         $this->channel->createdTime = time();
 
         // Save channel in memory
-        $this->repository->set($this->channel->channelHash, $this->channel->channelName, 30);
+        $this->repository->set($this->channel->channelHash, $this->channel->createdTime, 30);
 
         // Respond with channel info
         $this->response = $this->channel;

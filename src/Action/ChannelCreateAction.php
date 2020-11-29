@@ -24,8 +24,8 @@ final class ChannelCreateAction
     public function __construct(LoggerFactory $logger, ChannelCreateService $channel) {
 
         $this->logger = $logger
-            ->addFileHandler('site_approval_action.log')
-            ->createInstance('site_approval_action_process');
+            ->addFileHandler('channel_create_action.log')
+            ->createInstance('channel_create_action_process');
 
         $this->channel = $channel;
     }

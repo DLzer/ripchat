@@ -61,6 +61,19 @@ class ChannelRepository
     }
 
     /**
+     * Expires is meant to update the expiration time of a key
+     *
+     * @param string $key
+     * @param integer $ttl
+     * @return string
+     */
+    public function expires(string $key, int $ttl): string
+    {
+        $this->redis->expire($key, 60);
+        return $key;
+    }
+
+    /**
      * determine quickly if a key exists
      *
      * @param string $key
