@@ -96,6 +96,41 @@ class MessageRepository
     }
 
     /**
+     * Set a hash in redis
+     *
+     * @param string $id
+     * @param string $key
+     * @param string $value
+     * @param integer $ttl
+     * @return void
+     */
+    public function hset(string $id, string $key, string $value, int $ttl = null)
+    {
+        $this->redis->hset($id, $key, $value);
+
+        // IF $ttl is true, use TTL to set the expires time, otherwise default to 60s
+        if($ttl) {
+            $this->redis->expire($id, $ttl);
+        } else {
+            $this->redis->expire($id, 60);
+        }
+
+        return [$key => $value];
+    }
+
+    /**
+     * Get All Keys of a Hash
+     *
+     * @param string $key
+     * @return void
+     */
+    public function hgetall(string $key)
+    {
+        $response = $this->redis->hgetall($key);
+        return $response;
+    }
+
+    /**
      * determine quickly if a key exists
      *
      * @param string $key

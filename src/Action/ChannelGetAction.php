@@ -8,7 +8,7 @@ use Psr\Http\Message\ServerRequestInterface as ServerRequest;
 use App\Factory\LoggerFactory;
 use Psr\Log\LoggerInterface;
 
-final class ChannelCreateAction
+final class ChannelGetAction
 {
 
     /**

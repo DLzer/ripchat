@@ -2,7 +2,7 @@
 
 namespace App\Domain\Message\Data;
 
-final class Channel
+final class Message
 {
     /**
      * Message Body

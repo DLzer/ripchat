@@ -77,7 +77,7 @@ final class MessageService
             $this->message->messageBody = $request->message_body;
 
             // Save message in memory under the channel. Reset TTL to 60 seconds
-            $this->repository->rpush($this->message->channelHash, $this->message->messageBody, 60);
+            $this->repository->hset($this->message->channelHash, time(), $this->message->messageBody, 60);
 
             // Respond with channel info
             $this->response = $this->message;
@@ -85,7 +85,7 @@ final class MessageService
 
         } else {
 
-            $this->response = 'Error: Channel no longer exists';
+            $this->response->error = 'Error: Channel no longer exists';
             return  $this->response;
 
         }

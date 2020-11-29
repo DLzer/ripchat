@@ -75,7 +75,7 @@ final class ChannelCreateService
         $this->channel->createdTime = time();
 
         // Save channel in memory
-        $this->repository->rpush($this->channel->channelHash, $this->channel->createdTime, 60);
+        $this->repository->hset($this->channel->channelHash, 'channel_created', $this->channel->createdTime, 60);
 
         // Respond with channel info
         $this->response = $this->channel;

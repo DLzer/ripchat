@@ -67,13 +67,13 @@ final class ChannelGetService
      * @param object $request
      * @return boolean
      */
-    public function get(object $request): object
+    public function get(object $request)
     {
 
         if($this->repository->exists($request->channel_hash)) {
 
             // Save channel in memory
-            $channel = $this->repository->get($this->channel->channelHash);
+            $channel = $this->repository->hgetall($request->channel_hash);
 
             // Respond with channel info
             $this->response = $channel;
@@ -81,7 +81,7 @@ final class ChannelGetService
 
         } else {
 
-            $this->response = 'Error: Channel no longer exists';
+            $this->response->error = 'Error: Channel no longer exists';
             return  $this->response;
 
         }
