@@ -1,9 +1,9 @@
 RIPCHAT
 ==========
 
-RIPCHAT is meant to be a safe and temporary message solution. Channels are create quickly with a unique identifier that can be shared between parties.
-The liftime of a channel is 60 seconds. However, for every message sent the life-span is extended another 60 seconds. If a user wished, they can delete
-a channel; destroying it immediately.
+RIPCHAT is meant to be a safe and temporary message solution. Channels are created instantly with a unique identifier that can be shared between parties.
+The liftime of a channel is 60 seconds. However, for every message sent the life-span of the channel is extended another 60 seconds. 
+If a user wishes they can delete the channel on demand, destroying it instantly and permanently.
 
 
 Configuration
