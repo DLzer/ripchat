@@ -91,9 +91,9 @@ Endpoints
 ----------
 
 The current endpoints in use are:
-`POST`:`/channel/create` - `{"channel_name": "<name>"}`
-`POST`:`/channel/get` - `{"channel_hash": "<channelHash>}`
-`POST`:`/message/send` - `{"channel_hash": "<channelHash>", "message_body": "<message_body>"}`
+- `POST`:`/channel/create` - `{"channel_name": "<name>"}`
+- `POST`:`/channel/get` - `{"channel_hash": "<channelHash>}`
+- `POST`:`/message/send` - `{"channel_hash": "<channelHash>", "message_body": "<message_body>"}`
 
 Testing
 ----------
