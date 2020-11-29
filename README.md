@@ -1,6 +1,11 @@
 RIPCHAT
 ==========
 
+RIPCHAT is meant to be a safe and temporary message solution. Channels are create quickly with a unique identifier that can be shared between parties.
+The liftime of a channel is 60 seconds. However, for every message sent the life-span is extended another 60 seconds. If a user wished, they can delete
+a channel; destroying it immediately.
+
+
 Configuration
 -------------
 
@@ -31,11 +36,6 @@ The domain in this application houses the complex **business logic**.
 Instead of putting together business logic into massive fat "Models", they are separated into specialized *Services* aka an **Application Service**
 
 Each service can have multiple clients, e.g Action (request), CLI (console), Data (logic), Unit Testing (phpunit). This way each service manages only one responsibility and not more by separating data from behavior.
-
-Eloquent
---------
-
-In this application example i'm using the [Eloquent](https://laravel.com/docs/5.0/eloquent) ORM, which is a minor package from Laravel. Eloquent simply allows us to create queries in a simplified manner. As well as determining user models that match table schema's. This is just a personal preference caused by a hatred of writing long SQL queries.
 
 Redis
 --------
@@ -86,6 +86,14 @@ $settings['error_handler_middleware'] = [
     'display_error_details' => false,
 ];
 ````
+
+Endpoints
+----------
+
+The current endpoints in use are:
+`POST`:`/channel/create` - `{"channel_name": "<name>"}`
+`POST`:`/channel/get` - `{"channel_hash": "<channelHash>}`
+`POST`:`/message/send` - `{"channel_hash": "<channelHash>", "message_body": "<message_body>"}`
 
 Testing
 ----------
