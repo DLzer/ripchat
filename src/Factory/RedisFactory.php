@@ -53,7 +53,6 @@ final class RedisFactory
 
     public function createInstance()
     {
-
         return $this->redis;
     }
 

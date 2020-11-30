@@ -131,6 +131,18 @@ class ChannelRepository
     }
 
     /**
+     * Remove all data from Redis based on key
+     *
+     * @param string $key
+     * @return bool
+     */
+    public function del(string $key): bool
+    {
+        $this->redis->del($key);
+        return true;
+    }
+
+    /**
      * determine quickly if a key exists
      *
      * @param string $key
